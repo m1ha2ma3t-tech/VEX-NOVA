@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VEX NOVA — ذكاء يساعدك على التعلّم</title>
+<style>
+:root {
+  --site-primary: #102A43;
+  --site-secondary: #12B8A6;
+  --site-background: #F3F7FB;
+  --site-on-primary: #FFFFFF;
+  --site-on-secondary: #062D2B;
+  --site-on-background: #102A43;
+  --site-font-body: Tahoma, Arial, sans-serif;
+  --site-font-heading: Tahoma, Arial, sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--site-font-body);
+  background: var(--site-background);
+  color: var(--site-on-background);
+}
+#app {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--site-background);
+  color: var(--site-on-background);
+  overflow: hidden;
+  border-radius: 0;
+}
+a { color: inherit; text-decoration: none; }
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; padding: 18px clamp(20px, 6vw, 84px);
+  background: var(--site-primary); color: var(--site-on-primary);
+}
+.brand { display: flex; gap: 12px; align-items: center; font-weight: 800; letter-spacing: 1px; }
+.logo {
+  width: 42px; height: 42px; display: grid; place-items: center;
+  border-radius: 13px; background: var(--site-secondary); color: #062D2B;
+  font-size: 20px; font-weight: 900;
+}
+.nav { display: flex; gap: 24px; font-size: 14px; color: #D8E6F0; }
+.nav a:hover { color: #66E4D4; }
+.lang { border: 1px solid #476178; border-radius: 20px; padding: 8px 12px; background: transparent; color: white; cursor: pointer; }
+.hero {
+  position: relative; isolation: isolate; display: grid;
+  grid-template-columns: 1.2fr .8fr; align-items: center; gap: 34px;
+  padding: 76px clamp(20px, 8vw, 120px) 88px;
+  background: linear-gradient(125deg, #102A43 0%, #153E5A 60%, #0D5D69 100%);
+  color: white;
+}
+.hero:before {
+  content: ""; position: absolute; z-index: -1; width: 360px; height: 360px;
+  border: 1px solid #5EEAD4; border-radius: 50%; opacity: calc(.15 * var(--site-decoration-opacity));
+  left: -100px; top: -140px;
+}
+.eyebrow { color: #72E7D7; font-size: 13px; font-weight: 700; letter-spacing: 1px; }
+h1, h2, h3 { font-family: var(--site-font-heading); line-height: 1.25; }
+h1 { font-size: calc(clamp(38px, 5vw, 64px) * var(--site-heading-scale)); margin: 16px 0; max-width: 750px; }
+.hero p { color: #D7E6EF; line-height: 1.95; max-width: 640px; font-size: 17px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 13px 20px; border-radius: calc(12px * var(--site-radius-scale)); font-weight: 700; border: 1px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--site-secondary); color: #062D2B; }
+.btn-outline { border-color: #65859A; color: white; background: transparent; }
+.orbit-wrap { display: grid; place-items: center; min-height: 280px; }
+.orbit {
+  width: min(300px, 70vw); aspect-ratio: 1; border: 1px solid #5EEAD4;
+  border-radius: 50%; display: grid; place-items: center; position: relative;
+  box-shadow: 0 0 70px #12B8A622, inset 0 0 50px #12B8A611;
+}
+.orbit:before, .orbit:after { content: ""; position: absolute; inset: 24px; border: 1px dashed #6CCFC6; border-radius: 50%; }
+.orbit:after { inset: 52px; border-style: solid; opacity: .55; }
+.core { width: 112px; height: 112px; border-radius: 30px; display: grid; place-items: center; background: var(--site-secondary); color: #062D2B; font-size: 32px; font-weight: 900; transform: rotate(-8deg); box-shadow: 0 18px 45px #061B2D66; }
+.float { position: absolute; z-index: 2; background: #173E57; border: 1px solid #416D80; color: white; border-radius: 12px; padding: 10px 13px; font-size: 13px; }
+.f1 { top: 18%; right: -4%; } .f2 { bottom: 14%; left: -7%; } .f3 { bottom: 0; right: 30%; }
+.section { padding: 72px clamp(20px, 8vw, 120px); }
+.section-head { max-width: 680px; margin-bottom: 32px; }
+.section h2 { font-size: calc(clamp(28px, 3.2vw, 42px) * var(--site-heading-scale)); margin: 10px 0 14px; }
+.muted { color: #587084; line-height: 1.9; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.card { background: light-dark(#FFFFFF, #182B3A); color: light-dark(#102A43, #E9F3F8); border: 1px solid light-dark(#DCE6EE, #30485B); border-radius: calc(18px * var(--site-radius-scale)); padding: 24px; }
+.icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: #DDF8F4; color: #087D73; font-size: 23px; margin-bottom: 16px; }
+.card h3 { margin: 0 0 10px; font-size: 20px; }
+.card p { line-height: 1.85; margin-bottom: 0; color: light-dark(#587084, #B5C8D5); }
+.split { background: #E6F1F5; display: grid; grid-template-columns: 1fr 1fr; gap: 42px; align-items: center; }
+.steps { display: grid; gap: 14px; }
+.step { display: flex; gap: 14px; align-items: flex-start; }
+.num { flex: 0 0 38px; height: 38px; border-radius: 12px; background: var(--site-primary); color: white; display: grid; place-items: center; font-weight: 800; }
+.step p { margin: 5px 0 0; line-height: 1.8; color: #587084; }
+.demo {
+  background: #102A43; color: white; border-radius: 22px; padding: 26px;
+  box-shadow: 0 20px 50px #102A4320;
+}
+.demo-top { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #34536B; padding-bottom: 16px; }
+.dot { width: 8px; height: 8px; background: #12B8A6; border-radius: 50%; }
+.chat { min-height: 140px; padding: 18px 0; display: flex; flex-direction: column; gap: 12px; }
+.bubble { max-width: 92%; padding: 12px 14px; border-radius: 14px; line-height: 1.7; font-size: 14px; }
+.bot { background: #1D435D; align-self: flex-start; }
+.user { background: #12B8A6; color: #062D2B; align-self: flex-end; }
+.demo-form { display: flex; gap: 8px; }
+.demo-form input { min-width: 0; flex: 1; padding: 12px; border: 1px solid #42647A; border-radius: 10px; background: #0B2033; color: white; }
+.demo-form button { border: 0; border-radius: 10px; background: #12B8A6; padding: 0 16px; font-weight: 800; cursor: pointer; color: #062D2B; }
+.note { color: #9FB6C5; font-size: 12px; line-height: 1.7; margin-top: 12px; }
+.cta { text-align: center; background: var(--site-secondary); color: #062D2B; padding: 62px 20px; }
+.cta h2 { margin-top: 0; }
+.cta p { max-width: 650px; margin: 0 auto 24px; line-height: 1.9; }
+.cta .btn { background: var(--site-primary); color: white; }
+footer { background: #0B2033; color: #B7C9D6; padding: 25px clamp(20px, 8vw, 120px); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 13px; }
+footer strong { color: white; }
+@media (max-width: 760px) {
+  .nav { display: none; }
+  .hero { grid-template-columns: 1fr; padding-top: 54px; }
+  .orbit-wrap { min-height: 250px; }
+  .cards { grid-template-columns: 1fr; }
+  .split { grid-template-columns: 1fr; }
+  .f1 { right: 0; } .f2 { left: 0; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="VEX NOVA">
+      <span class="logo">V</span><span>VEX NOVA</span>
+    </a>
+    <nav class="nav">
+      <a href="#about" data-ar="عن المشروع" data-fr="Le projet">عن المشروع</a>
+      <a href="#features" data-ar="المميزات" data-fr="Fonctionnalités">المميزات</a>
+      <a href="#roadmap" data-ar="خطة التطوير" data-fr="Feuille de route">خطة التطوير</a>
+      <a href="#contact" data-ar="تواصل معنا" data-fr="Contact">تواصل معنا</a>
+    </nav>
+    <button class="lang" id="langToggle" type="button">Français</button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div>
+        <div class="eyebrow" data-ar="مشروع تقني قيد التطوير" data-fr="PROJET TECHNOLOGIQUE EN DÉVELOPPEMENT">مشروع تقني قيد التطوير</div>
+        <h1 data-ar="ذكاء يساعدك على التعلّم، أينما كنت." data-fr="Une intelligence qui vous aide à apprendre, où que vous soyez.">ذكاء يساعدك على التعلّم، أينما كنت.</h1>
+        <p data-ar="VEX NOVA فكرة مساعد ذكي متعدد اللغات يهدف إلى دعم التعلّم والعلوم والرياضيات، مع التوجه نحو التفاعل الصوتي وتجربة مناسبة للأجهزة محدودة الإمكانات." data-fr="VEX NOVA est un projet d’assistant intelligent multilingue destiné à soutenir l’apprentissage, les sciences et les mathématiques, avec une évolution vers l’interaction vocale et les appareils aux ressources limitées.">VEX NOVA فكرة مساعد ذكي متعدد اللغات يهدف إلى دعم التعلّم والعلوم والرياضيات، مع التوجه نحو التفاعل الصوتي وتجربة مناسبة للأجهزة محدودة الإمكانات.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#about" data-ar="اكتشف المشروع ↓" data-fr="Découvrir le projet ↓">اكتشف المشروع ↓</a>
+          <a class="btn btn-outline" href="#roadmap" data-ar="شاهد خطة التطوير" data-fr="Voir la feuille de route">شاهد خطة التطوير</a>
+        </div>
+      </div>
+      <div class="orbit-wrap" aria-label="رسم توضيحي رمزي">
+        <div class="orbit">
+          <span class="float f1" data-ar="متعدد اللغات" data-fr="Multilingue">متعدد اللغات</span>
+          <span class="float f2" data-ar="التعلّم والعلوم" data-fr="Apprentissage">التعلّم والعلوم</span>
+          <span class="float f3">AI · V1</span>
+          <div class="core">VEX</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-head">
+        <div class="eyebrow" data-ar="الفكرة والرؤية" data-fr="IDÉE ET VISION">الفكرة والرؤية</div>
+        <h2 data-ar="تقنية مفيدة، مصممة للناس." data-fr="Une technologie utile, conçue pour tous.">تقنية مفيدة، مصممة للناس.</h2>
+        <p class="muted" data-ar="نطمح إلى تطوير مساعد رقمي بسيط وسهل الوصول، يساعد المستخدم على استكشاف المعرفة بلغته، ويجعل أدوات التعلّم التقني أقرب إلى المجتمعات التي لا تتوفر فيها دائمًا موارد قوية أو اتصال مستقر بالإنترنت." data-fr="Notre ambition est de développer un assistant numérique simple et accessible qui aide chacun à explorer le savoir dans sa langue et rapproche les outils d’apprentissage des communautés où les ressources techniques ou la connexion Internet peuvent être limitées.">نطمح إلى تطوير مساعد رقمي بسيط وسهل الوصول، يساعد المستخدم على استكشاف المعرفة بلغته، ويجعل أدوات التعلّم التقني أقرب إلى المجتمعات التي لا تتوفر فيها دائمًا موارد قوية أو اتصال مستقر بالإنترنت.</p>
+      </div>
+      <div class="cards" id="features">
+        <article class="card">
+          <div class="icon">🌍</div>
+          <h3 data-ar="العربية والفرنسية" data-fr="Arabe et français">العربية والفرنسية</h3>
+          <p data-ar="البدء بلغتين أساسيتين، مع تصميم قابل للتوسع نحو لغات أخرى بحسب الإمكانات والاحتياجات." data-fr="Commencer avec deux langues principales, avec la possibilité d’en ajouter d’autres selon les besoins et les moyens.">البدء بلغتين أساسيتين، مع تصميم قابل للتوسع نحو لغات أخرى بحسب الإمكانات والاحتياجات.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🔬</div>
+          <h3 data-ar="مساندة التعلّم العلمي" data-fr="Soutien à l’apprentissage scientifique">مساندة التعلّم العلمي</h3>
+          <p data-ar="مساعدة المتعلّمين على فهم المفاهيم العلمية والرياضية، مع شروحات تدريجية وأمثلة عملية." data-fr="Aider les apprenants à comprendre les notions scientifiques et mathématiques grâce à des explications progressives et des exemples.">مساعدة المتعلّمين على فهم المفاهيم العلمية والرياضية، مع شروحات تدريجية وأمثلة عملية.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🎙️</div>
+          <h3 data-ar="تفاعل صوتي في المستقبل" data-fr="Interaction vocale à l’avenir">تفاعل صوتي في المستقبل</h3>
+          <p data-ar="خطة لإضافة التحدث والاستماع تدريجيًا، بعد بناء نموذج أولي مستقر وتجربة إمكانات الجهاز." data-fr="Prévoir progressivement la parole et l’écoute après la création d’un prototype stable et l’évaluation des capacités de l’appareil.">خطة لإضافة التحدث والاستماع تدريجيًا، بعد بناء نموذج أولي مستقر وتجربة إمكانات الجهاز.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split" id="roadmap">
+      <div>
+        <div class="eyebrow" data-ar="من الفكرة إلى النموذج" data-fr="DE L’IDÉE AU PROTOTYPE">من الفكرة إلى النموذج</div>
+        <h2 data-ar="خطوات صغيرة، وتقدّم حقيقي." data-fr="De petites étapes, un vrai progrès.">خطوات صغيرة، وتقدّم حقيقي.</h2>
+        <p class="muted" data-ar="سيُطوّر المشروع على مراحل واضحة لتقليل التكلفة واختبار الفكرة مبكرًا. الميزات المذكورة هنا أهداف تطويرية وليست كلها متاحة حاليًا." data-fr="Le projet sera développé par étapes afin de limiter les coûts et de tester l’idée tôt. Les fonctionnalités présentées sont des objectifs de développement et ne sont pas toutes disponibles aujourd’hui.">سيُطوّر المشروع على مراحل واضحة لتقليل التكلفة واختبار الفكرة مبكرًا. الميزات المذكورة هنا أهداف تطويرية وليست كلها متاحة حاليًا.</p>
+        <div class="steps">
+          <div class="step"><span class="num">1</span><div><strong data-ar="النموذج الأولي" data-fr="Prototype initial">النموذج الأولي</strong><p data-ar="واجهة بسيطة وأوامر أساسية وتجارب حسابية وتعليمية." data-fr="Une interface simple, des commandes de base et des essais éducatifs et mathématiques.">واجهة بسيطة وأوامر أساسية وتجارب حسابية وتعليمية.</p></div></div>
+          <div class="step"><span class="num">2</span><div><strong data-ar="اللغات وتجربة الاستخدام" data-fr="Langues et expérience utilisateur">اللغات وتجربة الاستخدام</strong><p data-ar="تحسين العربية والفرنسية، وجمع ملاحظات المستخدمين." data-fr="Améliorer l’arabe et le français, puis recueillir les retours des utilisateurs.">تحسين العربية والفرنسية، وجمع ملاحظات المستخدمين.</p></div></div>
+          <div class="step"><span class="num">3</span><div><strong data-ar="الصوت والاتصال المحدود" data-fr="Voix et connectivité limitée">الصوت والاتصال المحدود</strong><p data-ar="دراسة خيارات الصوت والعمل دون اتصال لبعض الوظائف البسيطة." data-fr="Étudier les options vocales et le fonctionnement hors ligne pour certaines tâches simples.">دراسة خيارات الصوت والعمل دون اتصال لبعض الوظائف البسيطة.</p></div></div>
+        </div>
+      </div>
+      <div class="demo">
+        <div class="demo-top"><span class="dot"></span><strong>VEX NOVA · Mini démo</strong></div>
+        <div class="chat" id="chat" aria-live="polite">
+          <div class="bubble bot" data-ar="مرحبًا! أنا نموذج تجريبي لواجهة VEX NOVA. جرّب كتابة عملية حسابية." data-fr="Bonjour ! Ceci est une maquette de VEX NOVA. Essayez une opération mathématique.">مرحبًا! أنا نموذج تجريبي لواجهة VEX NOVA. جرّب كتابة عملية حسابية.</div>
+        </div>
+        <form class="demo-form" id="demoForm">
+          <input id="demoInput" type="text" placeholder="مثال: 12 * 5" aria-label="اكتب رسالة">
+          <button type="submit" data-ar="إرسال" data-fr="Envoyer">إرسال</button>
+        </form>
+        <div class="note" data-ar="هذه تجربة محلية محدودة داخل الصفحة وليست نموذج ذكاء اصطناعي متصلًا." data-fr="Cette démonstration locale est limitée et n’est pas connectée à un modèle d’intelligence artificielle.">هذه تجربة محلية محدودة داخل الصفحة وليست نموذج ذكاء اصطناعي متصلًا.</div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2 data-ar="هل تريد المساهمة في VEX NOVA؟" data-fr="Envie de contribuer à VEX NOVA ?">هل تريد المساهمة في VEX NOVA؟</h2>
+      <p data-ar="نبحث عن متعلمين ومبرمجين ومصممين وموجّهين يساعدون في اختبار الفكرة وتطويرها. أضف وسيلة التواصل الحقيقية هنا قبل مشاركة الموقع رسميًا." data-fr="Nous souhaitons collaborer avec des apprenants, développeurs, designers et mentors pour tester et améliorer l’idée. Ajoutez ici un moyen de contact réel avant de partager le site officiellement.">نبحث عن متعلمين ومبرمجين ومصممين وموجّهين يساعدون في اختبار الفكرة وتطويرها. أضف وسيلة التواصل الحقيقية هنا قبل مشاركة الموقع رسميًا.</p>
+      <a class="btn" href="mailto:contact@example.com" id="contactLink" data-ar="أضف بريدك للتواصل" data-fr="Ajouter votre e-mail">أضف بريدك للتواصل</a>
+    </section>
+  </main>
+  <footer>
+    <span><strong>VEX NOVA</strong> — <span data-ar="فكرة قيد التطوير" data-fr="Projet en développement">فكرة قيد التطوير</span><br><small data-ar="المؤسس وصاحب الفكرة: أحمد صالح محمد" data-fr="Fondateur et créateur du projet : Ahmed Saleh Mohammed">المؤسس وصاحب الفكرة: أحمد صالح محمد</small></span>
+    <span>© <span id="year"></span> VEX NOVA · <span data-ar="نموذج أولي — لم يُنشر بعد" data-fr="Maquette — pas encore publiée">نموذج أولي — لم يُنشر بعد</span></span>
+  </footer>
+</div>
+<script>
+let language = "ar";
+const toggle = document.getElementById("langToggle");
+function setLanguage(next) {
+  language = next;
+  document.documentElement.lang = next;
+  document.documentElement.dir = next === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-ar][data-fr]").forEach(el => {
+    el.textContent = el.dataset[next];
+  });
+  toggle.textContent = next === "ar" ? "Français" : "العربية";
+  document.getElementById("demoInput").placeholder = next === "ar" ? "مثال: 12 * 5" : "Exemple : 12 * 5";
+}
+toggle.addEventListener("click", () => setLanguage(language === "ar" ? "fr" : "ar"));
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("demoForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const input = document.getElementById("demoInput");
+  const value = input.value.trim();
+  if (!value) return;
+  const chat = document.getElementById("chat");
+  const userBubble = document.createElement("div");
+  userBubble.className = "bubble user";
+  userBubble.textContent = value;
+  chat.appendChild(userBubble);
+  const reply = document.createElement("div");
+  reply.className = "bubble bot";
+  if (/^[0-9+\-*/().\s]+$/.test(value) && /[0-9]/.test(value)) {
+    try {
+      const result = Function('"use strict"; return (' + value + ')')();
+      reply.textContent = Number.isFinite(result)
+        ? (language === "ar" ? "النتيجة: " : "Résultat : ") + result
+        : (language === "ar" ? "تعذر حساب هذه العملية." : "Impossible de calculer cette expression.");
+    } catch {
+      reply.textContent = language === "ar" ? "لم أستطع حسابها. جرّب مثلًا 12 * 5." : "Calcul impossible. Essayez par exemple 12 * 5.";
+    }
+  } else if (/مرحبا|السلام|bonjour|salut/i.test(value)) {
+    reply.textContent = language === "ar" ? "أهلًا بك في VEX NOVA!" : "Bienvenue sur VEX NOVA !";
+  } else {
+    reply.textContent = language === "ar"
+      ? "هذه الواجهة تجريبية حاليًا. في المرحلة القادمة سنربطها بمساعد ذكي حقيقي."
+      : "Cette interface est encore expérimentale. Une prochaine étape consistera à la connecter à un véritable assistant IA.";
+  }
+  chat.appendChild(reply);
+  input.value = "";
+  chat.scrollTop = chat.scrollHeight;
+});
+</script>
+</body>
+</html>
