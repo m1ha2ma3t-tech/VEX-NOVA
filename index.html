@@ -32,7 +32,7 @@
       font-family: Arial, sans-serif;
     }
 
-    button, input {
+    button, input, select {
       font: inherit;
     }
 
@@ -97,7 +97,7 @@
     h1 {
       margin: 22px 0 14px;
       font-size: clamp(34px, 8vw, 58px);
-      line-height: 1.25;
+      line-height: 1.35;
     }
 
     .gradient {
@@ -137,7 +137,7 @@
       transition: .2s;
     }
 
-    .subject:hover, .subject:focus {
+    .subject:hover {
       border-color: var(--blue);
       transform: translateY(-2px);
     }
@@ -186,6 +186,7 @@
     .status {
       color: #f6c66b;
       font-size: 12px;
+      line-height: 1.7;
     }
 
     .messages {
@@ -255,10 +256,6 @@
       line-height: 2;
     }
 
-    [hidden] {
-      display: none !important;
-    }
-
     @media (max-width: 480px) {
       .subjects {
         grid-template-columns: repeat(2, 1fr);
@@ -303,7 +300,7 @@
         </h1>
 
         <p id="subtitle">
-          مساحة تعليمية ذكية تساعدك على فهم الرياضيات والعلوم،
+          مساحة تعليمية تساعدك على فهم الرياضيات والعلوم
           واستكشاف أفكار جديدة باللغة التي تناسبك.
         </p>
       </section>
@@ -349,7 +346,9 @@
           <div class="bot-icon">✦</div>
           <div>
             <strong>VEX-NOVA AI</strong>
-            <div class="status" id="status">واجهة تجريبية — الذكاء الاصطناعي غير متصل</div>
+            <div class="status" id="status">
+              واجهة تجريبية — الذكاء الاصطناعي غير متصل
+            </div>
           </div>
         </div>
 
@@ -373,8 +372,7 @@
         </form>
 
         <p class="notice" id="notice">
-          هذه نسخة أولية للواجهة. الإجابات الآلية غير متاحة حتى الآن،
-          وسنربط المساعد بخدمة ذكاء اصطناعي في مرحلة لاحقة.
+          هذه نسخة أولية للواجهة. المساعد الذكي لم يُربط بعد بخدمة ذكاء اصطناعي.
         </p>
       </section>
     </main>
@@ -391,7 +389,7 @@
         dir: "rtl",
         badge: "تعلم • اكتشف • ابتكر",
         title: 'مستقبلك يبدأ<br><span class="gradient">بالمعرفة</span>',
-        subtitle: "مساحة تعليمية ذكية تساعدك على فهم الرياضيات والعلوم، واستكشاف أفكار جديدة باللغة التي تناسبك.",
+        subtitle: "مساحة تعليمية تساعدك على فهم الرياضيات والعلوم واستكشاف أفكار جديدة باللغة التي تناسبك.",
         subjectsTitle: "استكشف المواد",
         math: "الرياضيات",
         physics: "الفيزياء",
@@ -403,7 +401,7 @@
         welcome: "مرحبًا بك! اختر مادة دراسية أو اكتب سؤالًا لتجربة الواجهة.",
         placeholder: "اكتب سؤالك هنا...",
         send: "إرسال",
-        notice: "هذه نسخة أولية للواجهة. الإجابات الآلية غير متاحة حتى الآن، وسنربط المساعد بخدمة ذكاء اصطناعي في مرحلة لاحقة.",
+        notice: "هذه نسخة أولية للواجهة. المساعد الذكي لم يُربط بعد بخدمة ذكاء اصطناعي.",
         footer: "المعرفة للجميع، بلا حدود.",
         offline: "وصل سؤالك إلى الواجهة، لكن المساعد الذكي لم يُربط بعد. هذه النسخة لا تنشئ إجابات حقيقية.",
         subjects: {
@@ -431,7 +429,7 @@
         welcome: "Bienvenue ! Choisissez une matière ou écrivez une question pour tester l’interface.",
         placeholder: "Écrivez votre question ici...",
         send: "Envoyer",
-        notice: "Ceci est une interface initiale. Les réponses automatiques ne sont pas encore disponibles. L’IA sera connectée ultérieurement.",
+        notice: "Ceci est une interface initiale. L’assistant IA n’est pas encore connecté.",
         footer: "Le savoir pour tous, sans limites.",
         offline: "Votre question est reçue, mais l’assistant IA n’est pas encore connecté. Cette version ne génère pas de vraies réponses.",
         subjects: {
@@ -445,7 +443,6 @@
       }
     };
 
-    const languageSelect = document.getElementById("language");
     let currentLanguage = "ar";
 
     function applyLanguage(lang) {
@@ -473,7 +470,7 @@
       document.getElementById("footerText").textContent = t.footer;
     }
 
-    languageSelect.addEventListener("change", function () {
+    document.getElementById("language").addEventListener("change", function () {
       applyLanguage(this.value);
     });
 
